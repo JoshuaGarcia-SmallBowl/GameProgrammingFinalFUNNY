@@ -27,6 +27,7 @@ public class FPSController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //movement
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
