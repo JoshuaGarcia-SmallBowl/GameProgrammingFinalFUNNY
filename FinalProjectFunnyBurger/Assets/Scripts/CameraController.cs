@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public GameObject player;
+    public int offset = 19;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +16,7 @@ public class CameraController : MonoBehaviour
     void Update()
     {
        
-        transform.position = new(player.transform.position.x, 10, player.transform.position.z);
+        transform.position = new(player.transform.position.x, offset, player.transform.position.z);
         
     }
 }
