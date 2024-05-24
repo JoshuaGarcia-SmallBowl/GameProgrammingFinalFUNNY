@@ -595,6 +595,7 @@ GameObject:
   - component: {fileID: 2324922301807390040}
   - component: {fileID: 4199864820904306960}
   - component: {fileID: 4328221020746429153}
+  - component: {fileID: 4280675972850578378}
   m_Layer: 0
   m_Name: CactusGuy
   m_TagString: Enemy
@@ -681,6 +682,27 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &4280675972850578378
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7863117186712049508}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.6995091, z: 1}
+  m_Center: {x: 0, y: 0.34975457, z: 0}
 --- !u!1 &8307371071325710853
 GameObject:
   m_ObjectHideFlags: 0
