@@ -5,23 +5,37 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float speed = 2.0f;
+    public float range = 1.5f;
     
     private GameObject player;
-    // Start is called before the first frame update
+    private Animator animator;
     void Start()
     {
         
         player = GameObject.Find("Player");
+        animator = GetComponent<Animator>();
        
     }
 
-    // Update is called once per frame
+    
     void Update()
-    {
-        Vector3 lookDirection = (player.transform.position - transform.position);
+    {      
+        //measure how far the enemy is from the player
+        float distance = Vector3.Distance(transform.position, player.transform.position);
+
+        //look torwards the player
         transform.LookAt(player.transform.position);
-        lookDirection = lookDirection.normalized;
-        transform.Translate(lookDirection.x * Time.deltaTime * speed, 0f, lookDirection.z * Time.deltaTime * speed);
+
+        //if out of range, move closer
+        if (distance > range)
+        {
+            animator.SetBool("Attacking", false);
+            transform.position += transform.forward * speed * Time.deltaTime;
+        }
+        else
+        {
+            animator.SetBool("Attacking", true);
+        }
         
     }
 }

@@ -9,23 +9,35 @@ public class PlayerController : MonoBehaviour
     private CharacterController characterController;
     float horizontal;
     float vertical;
+    Vector3 movement;
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
         
+        
     }
 
 
-    // Update is called once per frame
-    void Update()
+    
+    void FixedUpdate()
         
     {
-        //movement
-        horizontal = Input.GetAxis("Horizontal");
-        vertical = Input.GetAxis("Vertical");
-        Vector3 movement = new Vector3(horizontal, 0f, vertical).normalized * speed;
-        characterController.Move(movement);
-       
+        
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
+        Vector3 velo = characterController.velocity;
+        
+        if (horizontal != 0 || vertical != 0)
+        {
+            movement = new Vector3(horizontal, 0f, vertical).normalized * speed * Time.deltaTime;
+
+            characterController.Move(movement);
+            
+            
+        }
+
+
+        
 
         //rotation
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -41,9 +53,6 @@ public class PlayerController : MonoBehaviour
         }
         
     }
-    private void LookAtMouse()
-    {
-        
-    }
+
 
 }
