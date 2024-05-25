@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
 
     private bool hurtable = true;
 
+    //Projectiles
+    public GameObject firePro;
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -74,20 +76,20 @@ public class PlayerController : MonoBehaviour
             }
 
             //attacking
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 held = true;
                 atkStart = Time.time;
 
             }
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetKeyUp(KeyCode.Space))
             {
                 if (held)
                 {
                     float heldTime = Time.time - atkStart;
-                    if (heldTime > 0.5f)
+                    if (heldTime > 0.2f)
                     {
-                        Debug.Log("Ranged");
+                        Instantiate(firePro, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
                     }
                     else
                     {
@@ -102,26 +104,21 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
+     public void takeDamage(int damage)
     {
         if (hurtable)
         {
-            takeDamage(25);
+            animator.SetBool("Damaged", true);
+            health -= damage;
+            Debug.Log("Health" + health);
+            if (health <= 0)
+            {
+                animator.SetBool("Dead", true);
+                movable = false;
+            }
             StartCoroutine(Invincibility());
         }
         
-    }
-
-    void takeDamage(int damage)
-    {
-        animator.SetBool("Damaged", true);
-            health -= damage;
-            Debug.Log("Health" + health);
-        if (health <= 0)
-        {
-            animator.SetBool("Dead", true);
-            movable = false;
-        }
         
     }
 
