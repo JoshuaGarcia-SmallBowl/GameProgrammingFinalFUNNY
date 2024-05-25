@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
 {
     public float speed = 2;
     public int damage = 5;
+    public int health = 2;
     
     
     void Start()
@@ -35,7 +36,12 @@ public class Projectile : MonoBehaviour
         if (target != null)
         {
             target.hurt(damage);
-            Destroy(gameObject);
+            health--;
+            if (health == 0)
+            {
+                Destroy(gameObject);
+            }
+            
         }
         
        

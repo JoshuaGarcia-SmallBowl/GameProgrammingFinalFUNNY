@@ -895,6 +895,14 @@ PrefabInstance:
       propertyPath: firePro
       value: 
       objectReference: {fileID: 2640991163243186441, guid: 15d5ebd1a7ce3ba4dbdf8f8744dae99b, type: 3}
+    - target: {fileID: 5587468055807129816, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
+      propertyPath: maxAmmo
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5587468055807129816, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
+      propertyPath: firingRate
+      value: 0.3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

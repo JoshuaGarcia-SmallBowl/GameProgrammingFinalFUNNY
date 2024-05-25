@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     public int attack = 5;
 
     private bool movable = true;
+    private bool hurtable = true;
 
     private GameObject player;
     private Animator animator;
@@ -66,18 +67,29 @@ public class Enemy : MonoBehaviour
     
     public void hurt(int damage)
     {
-       
-        animator.SetBool("Damaged", true);
-        health -= damage;
-        
-        if (health <= 0)
+       if (hurtable)
         {
-            
-            animator.SetBool("Dead", true);
-            movable = false;
-            boxCollider.enabled = false;
-        }
+            animator.SetBool("Damaged", true);
+            health -= damage;
 
+            if (health <= 0)
+            {
+                StartCoroutine(Invincibility());
+                animator.SetBool("Dead", true);
+                movable = false;
+                boxCollider.enabled = false;
+            }
+        }
+        
+
+    }
+    System.Collections.IEnumerator Invincibility()
+    {
+        boxCollider.enabled = false;
+        hurtable = false;
+        yield return new WaitForSeconds(0.3f);
+        hurtable = true;
+        boxCollider.enabled = true;
     }
     public void damageEnd()
     {
