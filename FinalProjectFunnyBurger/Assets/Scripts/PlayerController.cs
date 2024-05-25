@@ -76,13 +76,13 @@ public class PlayerController : MonoBehaviour
             }
 
             //attacking
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetMouseButtonDown(0))
             {
                 held = true;
                 atkStart = Time.time;
 
             }
-            if (Input.GetKeyUp(KeyCode.Space))
+            if (Input.GetMouseButtonUp(0))
             {
                 if (held)
                 {

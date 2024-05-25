@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     private GameObject player;
     private Animator animator;
     private PlayerController playerController;
-
+    private BoxCollider boxCollider;
    
     void Start()
     {
@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour
         player = GameObject.Find("Player");
         animator = GetComponent<Animator>();
         playerController = player.GetComponent<PlayerController>();
+        boxCollider = GetComponent<BoxCollider>();
 
     }
 
@@ -65,15 +66,18 @@ public class Enemy : MonoBehaviour
     
     public void hurt(int damage)
     {
+       
         animator.SetBool("Damaged", true);
         health -= damage;
-
+        
         if (health <= 0)
         {
+            
             animator.SetBool("Dead", true);
             movable = false;
+            boxCollider.enabled = false;
         }
-        
+
     }
     public void damageEnd()
     {

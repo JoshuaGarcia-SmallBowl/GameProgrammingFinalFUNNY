@@ -17,6 +17,14 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        if (transform.position.x < -30 || transform.position.x > 40)
+        {
+            Destroy(gameObject);
+        }
+        if (transform.position.z < -160 || transform.position.z > -30)
+        {
+            Destroy(gameObject);
+        }
     }
     
     private void OnTriggerEnter(Collider other)
@@ -29,6 +37,7 @@ public class Projectile : MonoBehaviour
             target.hurt(damage);
             Destroy(gameObject);
         }
+        
        
     }
         
