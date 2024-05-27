@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -12,10 +13,16 @@ public class PlayerController : MonoBehaviour
     float vertical;
     Vector3 movement;
 
+    public Material fireMat;
+    public Material defaultMat;
+    public Material iceMat;
+
     private Animator animator;
+    private SkinnedMeshRenderer meshRenderer;
+    
     private int health = 100;
     private bool movable = true;
-
+    public float heat;
     
 
     
@@ -27,7 +34,8 @@ public class PlayerController : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        
+        meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
+        heatChangePC(heat);
     }
 
     void FixedUpdate()
@@ -60,26 +68,18 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-
-        if (movable)
+        //rotation
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Debug.DrawRay(ray.origin, ray.direction, Color.yellow);
+        if (Physics.Raycast(ray, out hit))
         {
-            //rotation
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-            Debug.DrawRay(ray.origin, ray.direction, Color.yellow);
-            if (Physics.Raycast(ray, out hit))
-            {
-                Vector3 targetPosition = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-                Quaternion rotation = Quaternion.LookRotation(targetPosition - transform.position);
+            Vector3 targetPosition = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+            Quaternion rotation = Quaternion.LookRotation(targetPosition - transform.position);
 
-                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * 10.0f);
-
-            }
+            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * 10.0f);
 
         }
-        
-
-
     }
 
      public void takeDamage(int damage)
@@ -114,6 +114,33 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("Damaged", false);
     }
 
+    public void movability(bool immov)
+    {
+        if (!immov)
+        {
+            movable = false;
+        }
+        else
+        {
+            movable = true;
+        }
+    }
 
+    public void heatChangePC(float heaty)
+    {
+        heat = heaty;
+        if (heat <= 20)
+        {
+            meshRenderer.material = iceMat;
+        }
+        else if (heat >= 80)
+        {
+            meshRenderer.material = fireMat;
+        }
+        else
+        {
+            meshRenderer.material = defaultMat;
+        }
+    }
 
 }

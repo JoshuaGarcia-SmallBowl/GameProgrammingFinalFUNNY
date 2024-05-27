@@ -9,22 +9,41 @@ public class ProjectileShoot : MonoBehaviour
     private bool held;
 
     private bool firing = false;
-    private bool burning = true;
+    private bool burning = false;
     private int ammo = 7;
     public int maxAmmo = 7;
     public float firingRate = 0.3f;
     private bool ammoFull = true;
 
-
-    private bool frozen;
+    private PlayerController playerController;
+    private bool frozen = true;
+    
     public GameObject firePro;
+    public GameObject icePro;
+    
     void Start()
     {
         ammo = maxAmmo;
+        playerController = GetComponent<PlayerController>();
     }
 
     void Update()
     {
+        //Set the player as frozen or burning
+        if (playerController.heat <= 20)
+        {
+            frozen = true;
+        }
+        else if(playerController.heat >= 80)
+        {
+            burning = true;
+        }
+        else
+        {
+            frozen = false;
+            burning = false;
+        }
+
         if (ammo == maxAmmo)
         {
             ammoFull = true;
@@ -71,18 +90,23 @@ public class ProjectileShoot : MonoBehaviour
             */
             if (held)
             {
-                float heldTime = Time.time - atkStart;
-                if (heldTime > 0.2f)
+                if (frozen)
                 {
-                    Debug.Log("Projectile");
+                    float heldTime = Time.time - atkStart;
+                    if (heldTime > 0.2f)
+                    {
+                        Instantiate(icePro, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
+                    }
+                    else
+                    {
+                        Debug.Log("Melee");
+                    }
                 }
                 else
                 {
                     Debug.Log("Melee");
-
-
-
                 }
+                
             }
             held = false;
         }
