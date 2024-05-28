@@ -21,7 +21,7 @@ public class SpawnManager : MonoBehaviour
         if (enemiesLeft == 0)
         {
             wave++;
-            enemiesToSpawn += wave;
+            enemiesToSpawn = wave + 5;
             SpawnWave(enemiesToSpawn);
 
         }
