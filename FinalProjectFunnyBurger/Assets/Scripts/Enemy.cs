@@ -8,9 +8,14 @@ public class Enemy : MonoBehaviour
     public float speed = 2.0f;
     public float range = 1.5f;
     public int attack = 5;
+    public bool ranged = false;
+    public GameObject projectile;
+    public float attackCd = 1.7f;
 
+    private bool rotatable = true;
     private bool movable = true;
     private bool hurtable = true;
+    private bool attackOnCd = false;
 
     private GameObject player;
     private Animator animator;
@@ -30,23 +35,38 @@ public class Enemy : MonoBehaviour
     
     void Update()
     {      
+        if (rotatable)
+        {
+            //look torwards the player
+            transform.LookAt(player.transform.position);
+        }
         if (movable)
         {
             //measure how far the enemy is from the player
             float distance = Vector3.Distance(transform.position, player.transform.position);
 
-            //look torwards the player
-            transform.LookAt(player.transform.position);
+            
 
             //if out of range, move closer
             if (distance > range)
             {
+                
                 animator.SetBool("Attacking", false);
+                
                 transform.position += transform.forward * speed * Time.deltaTime;
             }
             else
             {
+                
                 animator.SetBool("Attacking", true);
+                if (ranged)
+                {
+                    if (!attackOnCd)
+                    {
+                        StartCoroutine(shoot());
+                    }
+                }
+                
             }
         }
                
@@ -76,12 +96,25 @@ public class Enemy : MonoBehaviour
             {
                 StartCoroutine(Invincibility());
                 animator.SetBool("Dead", true);
+                rotatable = false;
                 movable = false;
                 boxCollider.enabled = false;
             }
         }
         
 
+    }
+
+    System.Collections.IEnumerator shoot()
+    {
+        movable = false;
+        attackOnCd = true;
+        Instantiate(projectile, transform.position, transform.rotation);
+        yield return new WaitForSeconds(attackCd);
+        
+        movable = true;
+        attackOnCd = false;
+        
     }
     System.Collections.IEnumerator Invincibility()
     {
