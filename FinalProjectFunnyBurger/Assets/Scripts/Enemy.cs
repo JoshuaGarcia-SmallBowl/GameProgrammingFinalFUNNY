@@ -108,21 +108,29 @@ public class Enemy : MonoBehaviour
     System.Collections.IEnumerator shoot()
     {
         movable = false;
-        attackOnCd = true;
-        Instantiate(projectile, transform.position, transform.rotation);
+        attackOnCd = true;        
+        animator.SetBool("Cooldown", true);
         yield return new WaitForSeconds(attackCd);
-        
+        animator.SetBool("Cooldown", false);
         movable = true;
         attackOnCd = false;
         
     }
+
     System.Collections.IEnumerator Invincibility()
     {
         boxCollider.enabled = false;
         hurtable = false;
+        
         yield return new WaitForSeconds(0.3f);
+        
         hurtable = true;
         boxCollider.enabled = true;
+    }
+    //used so the shot comes out with animation
+    public void shootTime()
+    {
+        Instantiate(projectile, transform.position, transform.rotation);
     }
     public void damageEnd()
     {

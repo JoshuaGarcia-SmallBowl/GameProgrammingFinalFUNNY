@@ -685,7 +685,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1702849369}
-  offset: 19
+  offset: 28
 --- !u!1 &612239440
 GameObject:
   m_ObjectHideFlags: 0
@@ -1872,6 +1872,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1248815240492774, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1702849381}
+    - targetCorrespondingSourceObject: {fileID: 1248815240492774, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1702849387}
   m_SourcePrefab: {fileID: 100100000, guid: ccd8c3b89aa02e943a08ab9238a8a70c, type: 3}
 --- !u!1 &1636183488
 GameObject:
@@ -2051,6 +2054,19 @@ MonoBehaviour:
   panel: {fileID: 622087627}
   heatBar: {fileID: 67588700}
   changeBar: {fileID: 784056770}
+--- !u!114 &1702849387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1702849369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c581506905bc144aa2ee6d4348e7758, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireAbProj: {fileID: 2640991163243186441, guid: 5a3e91aa2da350c42abef1613253b824, type: 3}
 --- !u!1 &1754694189
 GameObject:
   m_ObjectHideFlags: 0

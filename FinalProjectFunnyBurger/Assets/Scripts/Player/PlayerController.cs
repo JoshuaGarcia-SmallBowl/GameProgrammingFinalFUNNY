@@ -19,11 +19,13 @@ public class PlayerController : MonoBehaviour
 
     private Animator animator;
     private SkinnedMeshRenderer meshRenderer;
+    private EAbilities abilities;
     
     private int health = 100;
     private bool movable = true;
     public float heat;
-    
+
+    Vector3 targetPosition;
 
     
 
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         heatChangePC(heat);
+        abilities = GetComponent<EAbilities>();
     }
 
     void FixedUpdate()
@@ -69,17 +72,32 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         //rotation
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        Debug.DrawRay(ray.origin, ray.direction, Color.yellow);
-        if (Physics.Raycast(ray, out hit))
+        if (movable)
         {
-            Vector3 targetPosition = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-            Quaternion rotation = Quaternion.LookRotation(targetPosition - transform.position);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            Debug.DrawRay(ray.origin, ray.direction, Color.yellow);
+            if (Physics.Raycast(ray, out hit))
+            {
+                targetPosition = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                Quaternion rotation = Quaternion.LookRotation(targetPosition - transform.position);
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * 10.0f);
+                transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * 10.0f);
 
+            }
         }
+        
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+           
+                if (heat >= 80)
+                {
+                abilities.spawnProj(targetPosition, transform.position);
+                }
+            
+            
+        }
+
     }
 
      public void takeDamage(int damage)
@@ -93,6 +111,7 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetBool("Dead", true);
                 movable = false;
+                
             }
             StartCoroutine(Invincibility());
         }
