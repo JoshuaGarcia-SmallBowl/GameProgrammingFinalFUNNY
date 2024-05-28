@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class ProjectileShoot : MonoBehaviour
 {
@@ -13,18 +14,25 @@ public class ProjectileShoot : MonoBehaviour
     private int ammo = 7;
     public int maxAmmo = 7;
     public float firingRate = 0.3f;
-    private bool ammoFull = true;
+    private bool reloading = false;
+    public float reloadRate = 0.5f;
+    
 
     private PlayerController playerController;
     private bool frozen = true;
     
     public GameObject firePro;
-    public GameObject icePro;
-    
+    public GameObject iceProSmall;
+    public GameObject iceProMedium;
+    public GameObject iceProLarge;
+
+    public TextMeshProUGUI ammoTMP;
+    public TextMeshProUGUI chargeTMP;
     void Start()
     {
         ammo = maxAmmo;
         playerController = GetComponent<PlayerController>();
+        ammoTMP.text = (ammo + " / " + maxAmmo);
     }
 
     void Update()
@@ -33,21 +41,24 @@ public class ProjectileShoot : MonoBehaviour
         if (playerController.heat <= 20)
         {
             frozen = true;
+            chargeTMP.gameObject.SetActive(true);
         }
         else if(playerController.heat >= 80)
         {
             burning = true;
+            ammoTMP.gameObject.SetActive(true);
         }
         else
         {
             frozen = false;
             burning = false;
+            ammoTMP.gameObject.SetActive(false);
+            chargeTMP.gameObject.SetActive(false);
         }
 
-        if (ammo == maxAmmo)
+        if (!firing && !reloading)
         {
-            ammoFull = true;
-            StopCoroutine(reload());
+            StartCoroutine(reload());
         }
         //attacking
         if (Input.GetMouseButtonDown(0))
@@ -67,16 +78,36 @@ public class ProjectileShoot : MonoBehaviour
                         float heldTime2 = Time.time - atkStart;
                         if (heldTime2 > 0.2f)
                         {
-                            if (ammoFull)
+                            if (ammo > 0)
                             {
                                 StartCoroutine(fireShoot());
-                                firing = true;
+                                
                             }
 
                         }
                     }
                 }
 
+            }
+            else if (frozen)
+            {
+                float chargeTime = Time.time - atkStart;
+                if (chargeTime > 1f)
+                {
+                    chargeTMP.text = "Charge: 3";
+                }
+                else if (chargeTime > 0.6f)
+                {
+                    chargeTMP.text = "Charge: 2";
+                }
+                else if (chargeTime > 0.2f)
+                {
+                    chargeTMP.text = "Charge: 1";
+                }
+                else
+                {
+                    chargeTMP.text = "Charge: 0";
+                }
             }
 
         }
@@ -93,9 +124,20 @@ public class ProjectileShoot : MonoBehaviour
                 if (frozen)
                 {
                     float heldTime = Time.time - atkStart;
-                    if (heldTime > 0.2f)
+                    if (heldTime > 1f)
                     {
-                        Instantiate(icePro, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
+                        Instantiate(iceProLarge, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
+                        chargeTMP.text = "Charge: 0";
+                    }
+                    else if (heldTime > 0.6f)
+                    {
+                        Instantiate(iceProMedium, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
+                        chargeTMP.text = "Charge: 0";
+                    }
+                    else if (heldTime > 0.2f)
+                    {
+                        Instantiate(iceProSmall, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
+                        chargeTMP.text = "Charge: 0";
                     }
                     else
                     {
@@ -114,37 +156,43 @@ public class ProjectileShoot : MonoBehaviour
 
     System.Collections.IEnumerator fireShoot()
     {
-        ammoFull = false;
-        for (int i = ammo; i > 0; i--)
-        {
+            
+            firing = true;
+        
             ammo--;
-            Instantiate(firePro, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
+            ammoTMP.text = (ammo + " / " + maxAmmo);
+        Instantiate(firePro, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
             Debug.Log("Ammo: " + ammo);
             yield return new WaitForSeconds(firingRate);
-        }
-        ceaseFire();
+        firing = false;
+        
+        
     }
 
     System.Collections.IEnumerator reload()
     {
-        for (int i = ammo; i < maxAmmo; i++)
+        if (ammo < maxAmmo)
         {
-            ammo++;
+                     
+            reloading = true;
+            
             Debug.Log("Ammo: " + ammo);
 
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(reloadRate);
+            if (!firing)
+            {
+                ammo++;
+                ammoTMP.text = (ammo + " / " + maxAmmo);
+            }
+            
+            reloading = false;
         }
+            
+        
 
     }
 
-    private void ceaseFire()
-    {
-        StopCoroutine(fireShoot());
-        ammoFull = false;
-        StartCoroutine(reload());
-        firing = false;
-
-    }
+    
 
 
 }

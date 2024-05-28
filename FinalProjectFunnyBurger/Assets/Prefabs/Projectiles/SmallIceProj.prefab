@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4402752871655412551}
   - component: {fileID: -3298652560143280416}
   m_Layer: 0
-  m_Name: iceProjectile
+  m_Name: SmallIceProj
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.1311371, y: 1.6129202, z: -88.84412}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -119,9 +119,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72d10e8772fda645b80998018622db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 7
-  damage: 10
-  health: 9
+  speed: 6
+  damage: 7
+  health: 4
+  lifeTime: 2
 --- !u!54 &-3298652560143280416
 Rigidbody:
   m_ObjectHideFlags: 0

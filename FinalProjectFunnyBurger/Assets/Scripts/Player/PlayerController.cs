@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
 
     
 
+    
+
     private bool hurtable = true;
 
     

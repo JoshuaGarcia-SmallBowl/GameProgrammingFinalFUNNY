@@ -12,8 +12,8 @@ public class Enemy : MonoBehaviour
     public GameObject projectile;
     public float attackCd = 1.7f;
 
-    private bool rotatable = true;
-    private bool movable = true;
+    private bool rotatable = false;
+    private bool movable = false;
     private bool hurtable = true;
     private bool attackOnCd = false;
 
@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
         playerController = player.GetComponent<PlayerController>();
         boxCollider = GetComponent<BoxCollider>();
-
+        transform.LookAt(player.transform.position);
     }
 
     
@@ -139,6 +139,12 @@ public class Enemy : MonoBehaviour
     public void die()
     {
         Destroy(gameObject);
+    }
+
+    public void spawnAnimEnd()
+    {
+        movable = true;
+        rotatable = true;
     }
     
 }

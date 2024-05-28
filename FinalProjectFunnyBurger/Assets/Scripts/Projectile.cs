@@ -8,11 +8,13 @@ public class Projectile : MonoBehaviour
     public float speed = 2;
     public int damage = 5;
     public int health = 2;
-    
-    
+    public float lifeTime = 1.2f;
+    private float bornTime;
+
+
     void Start()
     {
-       
+        bornTime = Time.time;
     }
 
     void Update()
@@ -24,6 +26,11 @@ public class Projectile : MonoBehaviour
         }
         if (transform.position.z < -160 || transform.position.z > -30)
         {
+            Destroy(gameObject);
+        }
+        float aliveTime = Time.time - bornTime;
+        if (aliveTime > lifeTime)
+        {           
             Destroy(gameObject);
         }
     }
