@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -27,9 +28,13 @@ public class PlayerController : MonoBehaviour
 
     Vector3 targetPosition;
 
-    
+    private float CDStart;
+    private float CDEndTime= 8.0f;
+    private bool onCD;
 
-    
+    public TextMeshProUGUI CDtext;
+
+
 
     private bool hurtable = true;
 
@@ -73,6 +78,19 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (onCD)
+        {
+            float CDTime = Time.time - CDStart;
+            float displayCD = CDEndTime - CDTime;
+            displayCD = Mathf.Round(displayCD * 10.0f) * 0.1f;
+            CDtext.text = ("" + displayCD);
+            if (CDTime > CDEndTime)
+            {
+                onCD = false;
+                CDtext.gameObject.SetActive(false);
+            }
+        }
+        
         //rotation
         if (movable)
         {
@@ -87,18 +105,32 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * 10.0f);
 
             }
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                if (!onCD)
+                {
+                    if (heat >= 80)
+                    {
+                        abilities.spawnProj(targetPosition, transform.position);
+                        CDStart = Time.time;
+                        onCD = true;
+                        CDtext.gameObject.SetActive(true);
+                    }
+                    else if (heat <= 20)
+                    {
+                        abilities.iceProj(transform.position, transform.rotation);
+                        CDStart = Time.time;
+                        onCD = true;
+                        CDtext.gameObject.SetActive(true);
+                    }
+                }
+                
+
+
+            }
         }
         
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-           
-                if (heat >= 80)
-                {
-                abilities.spawnProj(targetPosition, transform.position);
-                }
-            
-            
-        }
+        
 
     }
 

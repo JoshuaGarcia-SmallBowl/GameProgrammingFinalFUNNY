@@ -11,6 +11,9 @@ public class Projectile : MonoBehaviour
     public float lifeTime = 1.2f;
     private float bornTime;
 
+    public bool split = false;
+    public GameObject splitProj;
+    public bool upFly;
 
     void Start()
     {
@@ -19,7 +22,15 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        if (upFly)
+        {
+            transform.Translate(0, 0.2f * Time.deltaTime, 0);
+        }
+        else
+        {
+            transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        }
+        
         if (transform.position.x < -30 || transform.position.x > 40)
         {
             Destroy(gameObject);
@@ -30,8 +41,8 @@ public class Projectile : MonoBehaviour
         }
         float aliveTime = Time.time - bornTime;
         if (aliveTime > lifeTime)
-        {           
-            Destroy(gameObject);
+        {
+            DestroyH();
         }
     }
     
@@ -46,16 +57,34 @@ public class Projectile : MonoBehaviour
             health--;
             if (health == 0)
             {
-                Destroy(gameObject);
+                DestroyH();
             }
             
+        }      
+    }
+    private void DestroyH()
+    {
+        if (split)
+        {
+            Split();
+        }
+        Destroy(gameObject);
+    }
+    private void Split()
+    {
+        Quaternion original = transform.rotation;
+        for (float i = -45; i <= 45; i += 15)
+        {
+            transform.Rotate(0, i, 0);
+            Instantiate(splitProj, transform.position, transform.rotation);
+            transform.rotation = original;
         }
         
-       
-    }
         
-    
-    
+    }
 
-    
+
+
+
+
 }
