@@ -12,10 +12,19 @@ public class Enemy : MonoBehaviour
     public GameObject projectile;
     public float attackCd = 1.7f;
 
+    public int variantChance = 10;
+    public bool variants = false;
+    public GameObject iceVariant;
+    public GameObject fireVariant;
+
+
     private bool rotatable = false;
     private bool movable = false;
     private bool hurtable = true;
     private bool attackOnCd = false;
+
+    public bool fireImmune = false;
+    public bool iceImmune = false;
 
     private GameObject player;
     private Animator animator;
@@ -30,6 +39,25 @@ public class Enemy : MonoBehaviour
         playerController = player.GetComponent<PlayerController>();
         boxCollider = GetComponent<BoxCollider>();
         transform.LookAt(player.transform.position);
+        //Roll if an enemy will be a fire or ice variant instead
+        if (variants)
+        {
+            if (Random.Range(1, variantChance) == 1)
+            {
+                
+                if (Random.Range(1, 10) <= 5)
+                {
+                    Instantiate(fireVariant, transform.position, transform.rotation);
+                    Destroy(gameObject);
+                }
+                else
+                {
+
+                    Instantiate(iceVariant, transform.position, transform.rotation);
+                    Destroy(gameObject);
+                }
+            }
+        }
     }
 
     
@@ -85,11 +113,33 @@ public class Enemy : MonoBehaviour
 
     }
     
-    public void hurt(int damage)
+    public void hurt(int damage, int type)
     {
        if (hurtable)
         {
+            
             animator.SetBool("Damaged", true);
+            if (fireImmune && iceImmune && type != 2)
+            {
+                damage = 0;
+            }
+            else if (fireImmune && type == 3)
+            {
+                damage /= 4;
+            }
+            else if (fireImmune && type == 1)
+            {
+                damage *= 2;
+            }
+            else if (iceImmune && type == 1)
+            {
+                damage /= 4;
+            }
+            else if (iceImmune && type == 3)
+            {
+                damage *= 2;
+            }
+            
             health -= damage;
 
             if (health <= 0)
@@ -100,6 +150,7 @@ public class Enemy : MonoBehaviour
                 movable = false;
                 boxCollider.enabled = false;
             }
+
         }
         
 

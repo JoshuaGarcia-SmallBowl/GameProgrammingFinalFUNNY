@@ -9,27 +9,34 @@ public class Projectile : MonoBehaviour
     public int damage = 5;
     public int health = 2;
     public float lifeTime = 1.2f;
+    //1 for frozen, 2 for normal, 3 for burning
+    public int type = 2;
+
     private float bornTime;
 
     public bool split = false;
     public GameObject splitProj;
-    public bool upFly;
+    public bool upFly = false;
+    private Rigidbody rb;
 
     void Start()
     {
         bornTime = Time.time;
+        if (upFly)
+        {
+            Debug.Log("detected");
+            rb = GetComponent<Rigidbody>();
+            rb.AddForce(Vector3.up * speed, ForceMode.Impulse);
+        }
     }
 
     void Update()
     {
-        if (upFly)
-        {
-            transform.Translate(0, 0.2f * Time.deltaTime, 0);
-        }
-        else
+        if (!upFly)
         {
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
         }
+        
         
         if (transform.position.x < -30 || transform.position.x > 40)
         {
@@ -53,7 +60,7 @@ public class Projectile : MonoBehaviour
         Enemy target = other.gameObject.GetComponent<Enemy>();
         if (target != null)
         {
-            target.hurt(damage);
+            target.hurt(damage, type);
             health--;
             if (health == 0)
             {

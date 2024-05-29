@@ -469,7 +469,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2d8643687b664580b4248d279407fb7c, type: 2}
+  - {fileID: 2100000, guid: 4b1ef0409a66f9049a266daaee9b568d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -596,7 +596,7 @@ GameObject:
   - component: {fileID: 4199864820904306960}
   - component: {fileID: 2996922802985522957}
   m_Layer: 0
-  m_Name: UberCactus
+  m_Name: FireCactus
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -612,7 +612,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.2574121, y: 0.13000011, z: -87.72966}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3416760308333974867}
@@ -652,13 +652,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c7ab206167ce843998d8a17aecc297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 30
-  speed: 2
-  range: 20
+  health: 35
+  speed: 3
+  range: 12
   attack: 10
   ranged: 1
-  projectile: {fileID: 2640991163243186441, guid: 71f2fbac07d74464987e7fa1320ad284, type: 3}
-  attackCd: 4
+  projectile: {fileID: 2640991163243186441, guid: 8890fc3c0a9cab742aaf76dc7300bc1c, type: 3}
+  attackCd: 0.9
+  variantChance: 10
+  variants: 0
+  iceVariant: {fileID: 0}
+  fireVariant: {fileID: 0}
+  fireImmune: 1
+  iceImmune: 0
 --- !u!65 &2996922802985522957
 BoxCollider:
   m_ObjectHideFlags: 0

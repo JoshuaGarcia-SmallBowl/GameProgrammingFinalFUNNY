@@ -16,6 +16,10 @@ public class ProjectileShoot : MonoBehaviour
     public float firingRate = 0.3f;
     private bool reloading = false;
     public float reloadRate = 0.5f;
+
+    public float defFireRate = 0.4f;
+    private float defStart;
+    private bool defCooldown = false;
     
 
     private PlayerController playerController;
@@ -25,6 +29,8 @@ public class ProjectileShoot : MonoBehaviour
     public GameObject iceProSmall;
     public GameObject iceProMedium;
     public GameObject iceProLarge;
+
+    public GameObject defProj;
 
     public TextMeshProUGUI ammoTMP;
     public TextMeshProUGUI chargeTMP;
@@ -37,6 +43,7 @@ public class ProjectileShoot : MonoBehaviour
 
     void Update()
     {
+
         //Set the player as frozen or burning
         if (playerController.heat <= 20)
         {
@@ -60,12 +67,31 @@ public class ProjectileShoot : MonoBehaviour
         {
             StartCoroutine(reload());
         }
+
+        //default cooldown end
+        if (defCooldown)
+        {
+            float defTimeCheck = Time.time - defStart;
+            if (defTimeCheck > defFireRate)
+            {
+                defCooldown = false;
+            }
+        }
+
         //attacking
         if (Input.GetMouseButtonDown(0))
         {
             held = true;
             atkStart = Time.time;
-
+            if (playerController.heat > 20 && playerController.heat < 80)
+            {
+                if (!defCooldown)
+                {
+                    Instantiate(defProj, transform.position, transform.rotation);
+                    defCooldown = true;
+                    defStart = Time.time;
+                }
+            }
         }
         if (Input.GetMouseButton(0))
         {
@@ -92,11 +118,11 @@ public class ProjectileShoot : MonoBehaviour
             else if (frozen)
             {
                 float chargeTime = Time.time - atkStart;
-                if (chargeTime > 1f)
+                if (chargeTime > 1.4f)
                 {
                     chargeTMP.text = "Charge: 3";
                 }
-                else if (chargeTime > 0.6f)
+                else if (chargeTime > 0.8f)
                 {
                     chargeTMP.text = "Charge: 2";
                 }
@@ -124,12 +150,12 @@ public class ProjectileShoot : MonoBehaviour
                 if (frozen)
                 {
                     float heldTime = Time.time - atkStart;
-                    if (heldTime > 1f)
+                    if (heldTime > 1.4f)
                     {
                         Instantiate(iceProLarge, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
                         chargeTMP.text = "Charge: 0";
                     }
-                    else if (heldTime > 0.6f)
+                    else if (heldTime > 0.8f)
                     {
                         Instantiate(iceProMedium, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
                         chargeTMP.text = "Charge: 0";
@@ -139,15 +165,9 @@ public class ProjectileShoot : MonoBehaviour
                         Instantiate(iceProSmall, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
                         chargeTMP.text = "Charge: 0";
                     }
-                    else
-                    {
-                        Debug.Log("Melee");
-                    }
+                    
                 }
-                else
-                {
-                    Debug.Log("Melee");
-                }
+                
                 
             }
             held = false;

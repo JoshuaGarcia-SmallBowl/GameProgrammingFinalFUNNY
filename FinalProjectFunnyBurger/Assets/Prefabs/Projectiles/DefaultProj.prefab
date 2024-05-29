@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4402752871655412551}
   - component: {fileID: -3298652560143280416}
   m_Layer: 0
-  m_Name: AbIceSmall
+  m_Name: DefaultProj
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.1311371, y: 1.6129202, z: -88.84412}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7148a0e5168ac014ab5d0749ec699f75, type: 2}
+  - {fileID: 2100000, guid: fd1202ab22bba3a418bc8555f14a5fd6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -119,13 +119,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a72d10e8772fda645b80998018622db0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 11
-  damage: 7
+  speed: 9
+  damage: 12
   health: 1
-  lifeTime: 3
-  type: 1
-  split: 1
-  splitProj: {fileID: 2640991163243186441, guid: 58252be9004001440abbeb3d4b33b32f, type: 3}
+  lifeTime: 7
+  type: 2
+  split: 0
+  splitProj: {fileID: 0}
   upFly: 0
 --- !u!54 &-3298652560143280416
 Rigidbody:

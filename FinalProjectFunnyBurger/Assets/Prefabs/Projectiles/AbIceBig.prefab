@@ -120,11 +120,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 7
-  damage: 20
+  damage: 10
   health: 1
   lifeTime: 5
+  type: 1
   split: 1
   splitProj: {fileID: 2640991163243186441, guid: b8265c9d37c99ae45a179dd45a183888, type: 3}
+  upFly: 0
 --- !u!54 &-3298652560143280416
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class EAbilities : MonoBehaviour
     {
         
         Debug.Log("Ability Activated");
-        Vector3 funny = new (aim.x, aim.y - 10, aim.z);
+        Vector3 funny = new (aim.x, aim.y - 5, aim.z);
         Instantiate(fireAbProj, funny, Quaternion.identity);
         yield return new WaitForSeconds(0.2f); 
         Vector3 offset = playerPos - aim;

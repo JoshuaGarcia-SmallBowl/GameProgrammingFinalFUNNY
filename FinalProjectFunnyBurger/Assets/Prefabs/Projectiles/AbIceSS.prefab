@@ -123,8 +123,10 @@ MonoBehaviour:
   damage: 5
   health: 1
   lifeTime: 1
+  type: 1
   split: 0
   splitProj: {fileID: 0}
+  upFly: 0
 --- !u!54 &-3298652560143280416
 Rigidbody:
   m_ObjectHideFlags: 0

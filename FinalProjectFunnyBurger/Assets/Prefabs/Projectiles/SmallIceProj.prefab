@@ -121,8 +121,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6
   damage: 7
-  health: 4
+  health: 3
   lifeTime: 2
+  type: 1
+  split: 0
+  splitProj: {fileID: 0}
+  upFly: 0
 --- !u!54 &-3298652560143280416
 Rigidbody:
   m_ObjectHideFlags: 0

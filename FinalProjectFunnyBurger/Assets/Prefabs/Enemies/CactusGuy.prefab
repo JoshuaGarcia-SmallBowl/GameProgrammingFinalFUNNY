@@ -659,6 +659,12 @@ MonoBehaviour:
   ranged: 1
   projectile: {fileID: 2640991163243186441, guid: 8890fc3c0a9cab742aaf76dc7300bc1c, type: 3}
   attackCd: 1.1
+  variantChance: 9
+  variants: 1
+  iceVariant: {fileID: 7863117186712049508, guid: a92f043edfd2d104f879b48f4fe1e89a, type: 3}
+  fireVariant: {fileID: 7863117186712049508, guid: ee7f4c26642fad54a86ad846b981d876, type: 3}
+  fireImmune: 0
+  iceImmune: 0
 --- !u!65 &2996922802985522957
 BoxCollider:
   m_ObjectHideFlags: 0
