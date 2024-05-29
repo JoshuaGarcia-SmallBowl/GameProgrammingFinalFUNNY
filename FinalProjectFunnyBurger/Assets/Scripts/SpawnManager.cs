@@ -28,11 +28,19 @@ public class SpawnManager : MonoBehaviour
     private int bossCooldown = 10;
     public GameObject player;
     private PlayerController playerController;
+    private AudioSource audioSource;
 
     public GameObject winScreen;
+
+    public AudioClip waveOneMusic;
+    public AudioClip waveTenMusic;
+    public AudioClip waveTwentyMusic;
+    public AudioClip waveThirthyMusic;
+    
     void Start()
     {
         playerController = player.GetComponent<PlayerController>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -62,6 +70,7 @@ public class SpawnManager : MonoBehaviour
                         scoreText.text = ("Score: " + score);
                         waveInfoStart = Time.time;
                         waveInfoUp = true;
+                        ChangeMusic();
                     }
                     
 
@@ -126,6 +135,33 @@ public class SpawnManager : MonoBehaviour
             StoryMode = true;
         }
         gameActive = true;
+    }
+
+    public void ChangeMusic()
+    {
+        if (wave == 30)
+        {
+            audioSource.clip = waveThirthyMusic;
+            audioSource.Play();
+
+        }
+        else if (wave == 20)
+        {
+            audioSource.clip = waveTwentyMusic;
+            audioSource.Play();
+        }
+        else if (wave == 10)
+        {
+            audioSource.clip = waveTenMusic;
+            audioSource.Play();
+        }
+        else if (wave == 1)
+        {
+            
+            audioSource.clip = waveOneMusic;
+            audioSource.Play();
+            
+        }
     }
 
     

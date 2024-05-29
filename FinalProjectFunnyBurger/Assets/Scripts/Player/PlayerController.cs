@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private bool onCD;
 
     public TextMeshProUGUI CDtext;
+    public GameObject AbilE;
 
     public GameObject manajero;
 
@@ -187,18 +188,22 @@ public class PlayerController : MonoBehaviour
 
     public void heatChangePC(float heaty)
     {
+        //change the player's material depending on their heat, while also making the E icon show up for their ability
         heat = heaty;
         if (heat <= 20)
         {
             meshRenderer.material = iceMat;
+            AbilE.SetActive(true);
         }
         else if (heat >= 80)
         {
             meshRenderer.material = fireMat;
+            AbilE.SetActive(true);
         }
         else
         {
             meshRenderer.material = defaultMat;
+            AbilE.SetActive(false);
         }
     }
 
