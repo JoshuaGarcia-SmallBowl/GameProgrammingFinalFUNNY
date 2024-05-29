@@ -21,9 +21,10 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     private SkinnedMeshRenderer meshRenderer;
     private EAbilities abilities;
+    private GameManager gameManager;
     
     private int health = 100;
-    private bool movable = true;
+    private bool movable = false;
     public float heat;
 
     Vector3 targetPosition;
@@ -34,8 +35,9 @@ public class PlayerController : MonoBehaviour
 
     public TextMeshProUGUI CDtext;
 
+    public GameObject manajero;
 
-
+    public TextMeshProUGUI healthText;
     private bool hurtable = true;
 
     
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour
         meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
         heatChangePC(heat);
         abilities = GetComponent<EAbilities>();
+        gameManager = manajero.GetComponent<GameManager>();
     }
 
     void FixedUpdate()
@@ -140,11 +143,13 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("Damaged", true);
             health -= damage;
-            Debug.Log("Health" + health);
+            healthText.text = (health + "/100");
+
             if (health <= 0)
             {
                 animator.SetBool("Dead", true);
                 movable = false;
+                gameManager.GameOver();
                 
             }
             StartCoroutine(Invincibility());
@@ -178,6 +183,7 @@ public class PlayerController : MonoBehaviour
             movable = true;
         }
     }
+    
 
     public void heatChangePC(float heaty)
     {

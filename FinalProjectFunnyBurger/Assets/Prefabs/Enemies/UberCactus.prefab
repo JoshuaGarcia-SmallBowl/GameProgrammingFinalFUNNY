@@ -652,13 +652,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c7ab206167ce843998d8a17aecc297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 30
+  health: 200
   speed: 2
   range: 20
   attack: 10
   ranged: 1
   projectile: {fileID: 2640991163243186441, guid: 71f2fbac07d74464987e7fa1320ad284, type: 3}
   attackCd: 4
+  variantChance: 10
+  variants: 0
+  iceVariant: {fileID: 0}
+  fireVariant: {fileID: 0}
+  fireImmune: 0
+  iceImmune: 0
 --- !u!65 &2996922802985522957
 BoxCollider:
   m_ObjectHideFlags: 0
