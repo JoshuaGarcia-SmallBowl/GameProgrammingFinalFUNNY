@@ -7,11 +7,14 @@ public class GameManager : MonoBehaviour
 {
     public GameObject GOUI;
     public GameObject TitleUI;
+    public GameObject pauseUI;
 
     private SpawnManager spawnManager;
     private PlayerController playerController;
     private GameObject player;
-     
+
+    private bool gameActive = false;
+    private bool paused = false;
     void Start()
     {
         spawnManager = GetComponent<SpawnManager>();
@@ -21,6 +24,24 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (gameActive)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (paused)
+                {
+                    paused = false;
+                    Time.timeScale = 1.0f;
+                    pauseUI.SetActive(false);
+                }
+                else
+                {
+                    paused = true;
+                    Time.timeScale = 0.0f;
+                    pauseUI.SetActive(true);
+                }
+            }
+        }
         
     }
 
@@ -29,18 +50,15 @@ public class GameManager : MonoBehaviour
         TitleUI.SetActive(false);
         spawnManager.StartGame(false);
         playerController.movability(true);
+        gameActive = true;
     }
 
-    public void StartStory()
-    {
-        TitleUI.SetActive(false);
-        spawnManager.StartGame(true);
-        playerController.movability(true);
-    }
+   
     
     public void GameOver()
     {
         GOUI.SetActive(true);
+        gameActive = false;
     }
     public void Restart()
     {

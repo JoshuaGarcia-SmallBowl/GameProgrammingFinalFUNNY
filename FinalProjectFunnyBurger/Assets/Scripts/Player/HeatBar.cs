@@ -62,7 +62,7 @@ public class HeatBar : MonoBehaviour
     {
         if (!heatChanging)
         {
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetKeyDown(KeyCode.Tab))
             {
                 SetHeatBar();
                 Time.timeScale = 0.2f;
@@ -72,7 +72,7 @@ public class HeatBar : MonoBehaviour
             }
             if (selecting)
             {
-                if (Input.GetKeyDown(KeyCode.A))
+                if (Input.GetKeyDown(KeyCode.Q))
                 {
                     heatToChange -= 20;
                     if (heat + heatToChange < 0)
@@ -86,7 +86,7 @@ public class HeatBar : MonoBehaviour
                     }
                     
                 }
-                if (Input.GetKeyDown(KeyCode.D))
+                if (Input.GetKeyDown(KeyCode.E))
                 {
                     heatToChange += 20;
                     if (heat + heatToChange > 100)
@@ -100,7 +100,7 @@ public class HeatBar : MonoBehaviour
                     }
                 }
             }
-            if (Input.GetMouseButtonUp(1))
+            if (Input.GetKeyUp(KeyCode.Tab))
             {
                 Time.timeScale = 1;
                 
