@@ -6,65 +6,70 @@ using UnityEngine;
 using TMPro;
 
 public class PlayerController : MonoBehaviour
-{
-
-    public float speed = 5.0f;
-    private CharacterController characterController;
+{ 
+    //movement variables
     float horizontal;
     float vertical;
     Vector3 movement;
+    Vector3 targetPosition;
 
+    //materials
     public Material fireMat;
     public Material defaultMat;
     public Material iceMat;
 
+    //External references
+    private CharacterController characterController;
     private Animator animator;
     private SkinnedMeshRenderer meshRenderer;
     private EAbilities abilities;
     private GameManager gameManager;
-    
+    public GameObject manajero;
+
+    //player characterstics
+    public float speed = 5.0f;
     private int health = 100;
     private bool movable = false;
     public float heat;
+    private bool hurtable = true;
 
-    Vector3 targetPosition;
-
+    //ability cooldown
     private float CDStart;
     private float CDEndTime= 8.0f;
     private bool onCD;
 
+    //UI
     public TextMeshProUGUI CDtext;
     public GameObject AbilE;
-
-    public GameObject manajero;
-
     public TextMeshProUGUI healthText;
-    private bool hurtable = true;
 
     
     private void Start()
     {
+
+        //get every reference
         characterController = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
-        meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
-        heatChangePC(heat);
+        meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();      
         abilities = GetComponent<EAbilities>();
         gameManager = manajero.GetComponent<GameManager>();
+
+        //set heat bar to current heat
+        heatChangePC(heat);
     }
 
     void FixedUpdate()
-
     {
+        //movement
         if (movable)
         {
             horizontal = Input.GetAxisRaw("Horizontal");
-            vertical = Input.GetAxisRaw("Vertical");
-            Vector3 velo = characterController.velocity;
+            vertical = Input.GetAxisRaw("Vertical");            
 
+            //check if any input to move the player is being done, if not: make them idle
             if (horizontal != 0 || vertical != 0)
             {
                 movement = new Vector3(horizontal, 0f, vertical).normalized * speed * Time.deltaTime;
-
                 characterController.Move(movement);
                 animator.SetBool("Moving", true);
 
@@ -82,12 +87,17 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        //check if the ability is on cooldown
         if (onCD)
         {
+            //run a timer for CDEndTime, disabling cooldown when it runs out
             float CDTime = Time.time - CDStart;
             float displayCD = CDEndTime - CDTime;
+
+            //round the cooldown to one decimal place for the display
             displayCD = Mathf.Round(displayCD * 10.0f) * 0.1f;
             CDtext.text = ("" + displayCD);
+
             if (CDTime > CDEndTime)
             {
                 onCD = false;
@@ -95,24 +105,30 @@ public class PlayerController : MonoBehaviour
             }
         }
         
-        //rotation
+        
         if (movable)
         {
+            //Rotation 
+            //make a ray to the mousePosition
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             Debug.DrawRay(ray.origin, ray.direction, Color.yellow);
             if (Physics.Raycast(ray, out hit))
             {
+                //get the difference of the player and the ray's position, then look torward it
                 targetPosition = new Vector3(hit.point.x, transform.position.y, hit.point.z);
                 Quaternion rotation = Quaternion.LookRotation(targetPosition - transform.position);
 
                 transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * 10.0f);
 
             }
+
+            //Ability
             if (Input.GetKeyDown(KeyCode.E))
             {
                 if (!onCD)
                 {
+                    //use fire or ice ability based on heat, call on EAbilities to use them
                     if (heat >= 80)
                     {
                         abilities.spawnProj(targetPosition, transform.position);
@@ -138,6 +154,8 @@ public class PlayerController : MonoBehaviour
 
     }
 
+
+    //called by enemies when they hit the player
      public void takeDamage(int damage)
     {
         if (hurtable)
@@ -167,12 +185,13 @@ public class PlayerController : MonoBehaviour
     }
 
     
-
+    //Used for animations
     public void damageEnd()
     {
         animator.SetBool("Damaged", false);
     }
 
+    //called by other scripts to make the player immobile
     public void movability(bool immov)
     {
         if (!immov)
@@ -186,6 +205,7 @@ public class PlayerController : MonoBehaviour
     }
     
 
+    //called by other scripts to update the player's heat
     public void heatChangePC(float heaty)
     {
         //change the player's material depending on their heat, while also making the E icon show up for their ability

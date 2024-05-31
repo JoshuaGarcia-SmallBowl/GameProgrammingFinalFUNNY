@@ -11,6 +11,8 @@ public class HeatBar : MonoBehaviour
     private float heatToChange;
     private bool heatChanging;
 
+
+    //object references
     public GameObject panel;
     private PlayerController playerController;
     public Slider heatBar;
@@ -25,33 +27,26 @@ public class HeatBar : MonoBehaviour
         
         heatChanging = true;
         
+        //get the absolute value of the amount of heat to change then divide it by 20, this is to figure out how many times the heatBar will have to tick to reach the desired value
+
         for (float i = Mathf.Abs(change / 20f); i != 0; i--)
         {
+            
             yield return new WaitForSeconds(1.5f);
+            //move the heat by one tick either left or right if it's rasing or lowering the heat value
             if (change < 0)
             {
                 heat -= 20;
             }
-            if(change > 0)
+            else if(change > 0)
             {
                 heat += 20;
             }
-            Debug.Log("Heat:" + heat);
-            if (heat <= 20)
-            {
-                Debug.Log("Frozen");
-            }
-            else if (heat >= 80)
-            {
-                Debug.Log("Burning");
-            }
-            else
-            {
-                Debug.Log("Default");
-            }
+            
             SetHeatBar();
             
         }
+        //reset the heat to change so it can work the next time
         heatChanging = false;
         heatToChange = 0;
         
@@ -60,8 +55,10 @@ public class HeatBar : MonoBehaviour
 
     private void Update()
     {
+        
         if (!heatChanging)
         {
+            //when tab is pressed, pull up the heat bar
             if (Input.GetKeyDown(KeyCode.Tab))
             {
                 SetHeatBar();
@@ -70,11 +67,13 @@ public class HeatBar : MonoBehaviour
                 panel.gameObject.SetActive(true);
                 playerController.movability(false);
             }
+            //while the heat bar is up, Q and E move the selection left and right
             if (selecting)
             {
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
                     heatToChange -= 20;
+                    //check if this change would go below 0
                     if (heat + heatToChange < 0)
                     {
                         heatToChange += 20;
@@ -88,6 +87,7 @@ public class HeatBar : MonoBehaviour
                 }
                 if (Input.GetKeyDown(KeyCode.E))
                 {
+                    //check if this change would go above 100
                     heatToChange += 20;
                     if (heat + heatToChange > 100)
                     {
@@ -100,6 +100,7 @@ public class HeatBar : MonoBehaviour
                     }
                 }
             }
+            //when tab is released, the heat bar dissapears, and the heat begins changing to the point selected
             if (Input.GetKeyUp(KeyCode.Tab))
             {
                 Time.timeScale = 1;
@@ -113,6 +114,7 @@ public class HeatBar : MonoBehaviour
         
     }
 
+    //make the heat bar update to reflect the heat being changed, also tell the heat to playerController
     private void SetHeatBar()
     {
         heatBar.value = heat / 20;
