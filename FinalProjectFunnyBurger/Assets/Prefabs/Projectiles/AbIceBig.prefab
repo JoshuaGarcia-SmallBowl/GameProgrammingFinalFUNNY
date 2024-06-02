@@ -127,7 +127,7 @@ MonoBehaviour:
   split: 1
   splitProj: {fileID: 2640991163243186441, guid: b8265c9d37c99ae45a179dd45a183888, type: 3}
   upFly: 0
-  particle: 1
+  particle: 0
   particlePrefab: {fileID: 776165826151078945, guid: cc50d2f688d2b5342931b146804b213b, type: 3}
 --- !u!54 &-3298652560143280416
 Rigidbody:

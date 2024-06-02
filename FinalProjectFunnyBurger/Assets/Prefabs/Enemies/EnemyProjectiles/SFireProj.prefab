@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -3298652560143280416}
   - component: {fileID: 2358340444698819492}
   m_Layer: 0
-  m_Name: Iceproj
+  m_Name: SFireProj
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.1311371, y: 1.6129202, z: -88.84412}
-  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 78377f0d38e131048b6ba2db0b0d5690, type: 2}
+  - {fileID: 2100000, guid: 520938bf13624b04fb159c3db7351aca, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -146,10 +146,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77a561de22e3a244b8cb03050b4546df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 12
   damage: 10
-  lifeTime: 1
-  split: 1
-  splitProj: {fileID: 2640991163243186441, guid: 19503b7fa1ae3624d88c8e51ad3554d4, type: 3}
+  lifeTime: 1.6
+  split: 0
+  splitProj: {fileID: 2640991163243186441}
   randomSpeed: 0
   majorOffsetChance: 3

@@ -168,6 +168,8 @@ public class PlayerController : MonoBehaviour
             {
                 animator.SetBool("Dead", true);
                 movable = false;
+                hurtable = false;
+                healthText.text = ("Dead lol");
                 gameManager.GameOver();
                 
             }
@@ -197,10 +199,12 @@ public class PlayerController : MonoBehaviour
         if (!immov)
         {
             movable = false;
+            hurtable = false;
         }
         else
         {
             movable = true;
+            hurtable = true;
         }
     }
     

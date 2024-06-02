@@ -658,7 +658,7 @@ MonoBehaviour:
   attack: 10
   ranged: 1
   projectile: {fileID: 2640991163243186441, guid: ddbb0c04ae5f0e54bb9b90c9eb93bf8e, type: 3}
-  attackCd: 0.9
+  attackCd: 1.4
   variantChance: 10
   variants: 0
   iceVariant: {fileID: 0}

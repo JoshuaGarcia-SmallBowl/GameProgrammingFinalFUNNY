@@ -716,7 +716,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 40
   speed: 7
-  range: 1
+  range: 0.5
   attack: 10
   ranged: 0
   projectile: {fileID: 0}

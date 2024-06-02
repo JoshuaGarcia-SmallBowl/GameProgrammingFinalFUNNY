@@ -589,7 +589,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 704.4, y: 384.40002}
+  m_SizeDelta: {x: 704, y: 384}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &167465906
 MonoBehaviour:
@@ -1966,10 +1966,10 @@ RectTransform:
   - {fileID: 67588699}
   m_Father: {fileID: 1109225622}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: -704, y: -384}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &644464056
 GameObject:
@@ -4883,7 +4883,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 400}
+  m_SizeDelta: {x: 704, y: 384}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1533574728
 MonoBehaviour:
@@ -5313,7 +5313,7 @@ MonoBehaviour:
   mushroom: {fileID: 8222218027594539095, guid: c232dd267d2dde049a55b4e8f4bd028f, type: 3}
   boss: {fileID: 7863117186712049508, guid: aee0941d4ecaa134aa3627ed51af6262, type: 3}
   enemiesLeft: 1
-  spawnRange: 9
+  spawnRange: 14
   waveText: {fileID: 485376347}
   scoreText: {fileID: 2110064728}
   newWaveUI: {fileID: 1142956828}
@@ -5751,7 +5751,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 400}
+  m_SizeDelta: {x: 704, y: 384}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1763289047
 MonoBehaviour:
