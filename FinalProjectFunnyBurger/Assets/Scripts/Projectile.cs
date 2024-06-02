@@ -19,6 +19,9 @@ public class Projectile : MonoBehaviour
     public bool upFly = false;
     private Rigidbody rb;
 
+    public bool particle;
+    public GameObject particlePrefab;
+
     void Start()
     {
         bornTime = Time.time;
@@ -60,6 +63,7 @@ public class Projectile : MonoBehaviour
         Enemy target = other.gameObject.GetComponent<Enemy>();
         if (target != null)
         {
+            
             target.hurt(damage, type);
             health--;
             if (health == 0)
@@ -75,6 +79,11 @@ public class Projectile : MonoBehaviour
         {
             Split();
         }
+        if (particle)
+        {
+            Instantiate(particlePrefab, transform.position, Quaternion.identity);
+        }
+
         Destroy(gameObject);
     }
     private void Split()

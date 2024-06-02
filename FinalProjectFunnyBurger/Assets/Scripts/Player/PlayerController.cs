@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     //player characterstics
     public float speed = 5.0f;
     private int health = 100;
-    private bool movable = false;
+    public bool movable = false;
     public float heat;
     private bool hurtable = true;
 

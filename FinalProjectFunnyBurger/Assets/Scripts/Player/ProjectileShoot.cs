@@ -69,112 +69,116 @@ public class ProjectileShoot : MonoBehaviour
             chargeTMP.gameObject.SetActive(false);
         }
 
-        if (!firing && !reloading)
+        if (playerController.movable)
         {
-            StartCoroutine(reload());
-        }
-
-        //default cooldown end
-        if (defCooldown)
-        {
-            float defTimeCheck = Time.time - defStart;
-            if (defTimeCheck > defFireRate)
+            if (!firing && !reloading)
             {
-                defCooldown = false;
+                StartCoroutine(reload());
             }
-        }
 
-        //attacking
-        if (Input.GetMouseButtonDown(0))
-        {
-            held = true;
-            atkStart = Time.time;
-            if (playerController.heat > 20 && playerController.heat < 80)
+            //default cooldown end
+            if (defCooldown)
             {
-                if (!defCooldown)
+                float defTimeCheck = Time.time - defStart;
+                if (defTimeCheck > defFireRate)
                 {
-                    Instantiate(defProj, transform.position, transform.rotation);
-                    defCooldown = true;
-                    defStart = Time.time;
+                    defCooldown = false;
                 }
             }
-        }
-        if (Input.GetMouseButton(0))
-        {
-            if (burning)
-            {
-                //check if firing so there's intervals between each shot
-                if (!firing)
-                {
-                    if (held)
-                    {
-                        float heldTime2 = Time.time - atkStart;
-                        //if held for long enough, start firing projectiles while held
-                        if (heldTime2 > 0.2f)
-                        {
-                            if (ammo > 0)
-                            {
-                                StartCoroutine(fireShoot());
-                                
-                            }
 
+            //attacking
+            if (Input.GetMouseButtonDown(0))
+            {
+                held = true;
+                atkStart = Time.time;
+                if (playerController.heat > 20 && playerController.heat < 80)
+                {
+                    if (!defCooldown)
+                    {
+                        Instantiate(defProj, transform.position, transform.rotation);
+                        defCooldown = true;
+                        defStart = Time.time;
+                    }
+                }
+            }
+            if (Input.GetMouseButton(0))
+            {
+                if (burning)
+                {
+                    //check if firing so there's intervals between each shot
+                    if (!firing)
+                    {
+                        if (held)
+                        {
+                            float heldTime2 = Time.time - atkStart;
+                            //if held for long enough, start firing projectiles while held
+                            if (heldTime2 > 0.2f)
+                            {
+                                if (ammo > 0)
+                                {
+                                    StartCoroutine(fireShoot());
+
+                                }
+
+                            }
                         }
                     }
+
+                }
+                else if (frozen)
+                {
+                    //update UI based on current charge
+                    float chargeTime = Time.time - atkStart;
+                    if (chargeTime > 1.4f)
+                    {
+                        chargeTMP.text = "Charge: 3";
+                    }
+                    else if (chargeTime > 0.8f)
+                    {
+                        chargeTMP.text = "Charge: 2";
+                    }
+                    else if (chargeTime > 0.2f)
+                    {
+                        chargeTMP.text = "Charge: 1";
+                    }
+                    else
+                    {
+                        chargeTMP.text = "Charge: 0";
+                    }
                 }
 
             }
-            else if (frozen)
+            if (Input.GetMouseButtonUp(0))
             {
-                //update UI based on current charge
-                float chargeTime = Time.time - atkStart;
-                if (chargeTime > 1.4f)
+                //fire frozen projectile based on charge
+                if (held)
                 {
-                    chargeTMP.text = "Charge: 3";
-                }
-                else if (chargeTime > 0.8f)
-                {
-                    chargeTMP.text = "Charge: 2";
-                }
-                else if (chargeTime > 0.2f)
-                {
-                    chargeTMP.text = "Charge: 1";
-                }
-                else
-                {
-                    chargeTMP.text = "Charge: 0";
-                }
-            }
+                    if (frozen)
+                    {
+                        float heldTime = Time.time - atkStart;
+                        if (heldTime > 1.4f)
+                        {
+                            Instantiate(iceProLarge, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
+                            chargeTMP.text = "Charge: 0";
+                        }
+                        else if (heldTime > 0.8f)
+                        {
+                            Instantiate(iceProMedium, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
+                            chargeTMP.text = "Charge: 0";
+                        }
+                        else if (heldTime > 0.2f)
+                        {
+                            Instantiate(iceProSmall, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
+                            chargeTMP.text = "Charge: 0";
+                        }
 
-        }
-        if (Input.GetMouseButtonUp(0))
-        {
-            //fire frozen projectile based on charge
-            if (held)
-            {
-                if (frozen)
-                {
-                    float heldTime = Time.time - atkStart;
-                    if (heldTime > 1.4f)
-                    {
-                        Instantiate(iceProLarge, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
-                        chargeTMP.text = "Charge: 0";
                     }
-                    else if (heldTime > 0.8f)
-                    {
-                        Instantiate(iceProMedium, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
-                        chargeTMP.text = "Charge: 0";
-                    }
-                    else if (heldTime > 0.2f)
-                    {
-                        Instantiate(iceProSmall, new(transform.position.x, transform.position.y + 1, transform.position.z), transform.rotation);
-                        chargeTMP.text = "Charge: 0";
-                    }
-                    
+
+
                 }
-                
-                
+                held = false;
             }
-            held = false;
+        
         }
     }
 

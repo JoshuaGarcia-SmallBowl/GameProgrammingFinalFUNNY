@@ -122,11 +122,13 @@ MonoBehaviour:
   speed: 15
   damage: 9
   health: 9999
-  lifeTime: 5
+  lifeTime: 3
   type: 3
   split: 0
   splitProj: {fileID: 0}
   upFly: 1
+  particle: 0
+  particlePrefab: {fileID: 776165826151078945, guid: 22e453296554d6f42bc813d681f62463, type: 3}
 --- !u!54 &-3298652560143280416
 Rigidbody:
   m_ObjectHideFlags: 0
