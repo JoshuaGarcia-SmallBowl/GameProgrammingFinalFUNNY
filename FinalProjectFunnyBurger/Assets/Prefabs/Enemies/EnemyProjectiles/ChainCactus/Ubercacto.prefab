@@ -147,7 +147,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 6
-  damage: 10
+  damage: 50
   lifeTime: 1.6
   split: 1
   splitProj: {fileID: 2640991163243186441, guid: afd4b8b6472dbdb4d88a7b42a1768486, type: 3}
+  randomSpeed: 0
+  majorOffsetChance: 3

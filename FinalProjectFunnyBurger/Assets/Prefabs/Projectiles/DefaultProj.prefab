@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fd1202ab22bba3a418bc8555f14a5fd6, type: 2}
+  - {fileID: 2100000, guid: 0420eef65a9103241abca4e53c4d74bb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,6 +127,8 @@ MonoBehaviour:
   split: 0
   splitProj: {fileID: 0}
   upFly: 0
+  particle: 0
+  particlePrefab: {fileID: 0}
 --- !u!54 &-3298652560143280416
 Rigidbody:
   m_ObjectHideFlags: 0
