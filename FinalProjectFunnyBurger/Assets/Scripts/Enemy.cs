@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    //characteristics
     public int health = 10;
     public float speed = 2.0f;
     public float range = 1.5f;
@@ -12,12 +13,13 @@ public class Enemy : MonoBehaviour
     public GameObject projectile;
     public float attackCd = 1.7f;
 
+    //variants
     public int variantChance = 10;
     public bool variants = false;
     public GameObject iceVariant;
     public GameObject fireVariant;
 
-
+    //capabilites
     private bool rotatable = false;
     private bool movable = false;
     private bool hurtable = true;
@@ -26,6 +28,7 @@ public class Enemy : MonoBehaviour
     public bool fireImmune = false;
     public bool iceImmune = false;
 
+    //external references
     private GameObject player;
     private Animator animator;
     private PlayerController playerController;
@@ -38,6 +41,8 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
         playerController = player.GetComponent<PlayerController>();
         boxCollider = GetComponent<BoxCollider>();
+
+        //look at the player now so they face in the player's direction during the spawn animation
         transform.LookAt(player.transform.position);
         //Roll if an enemy will be a fire or ice variant instead
         if (variants)
@@ -101,6 +106,7 @@ public class Enemy : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
+        //deal damage to player
         if (movable)
         {
             if (other.CompareTag("Player"))
@@ -109,16 +115,14 @@ public class Enemy : MonoBehaviour
             }
 
         }
-
-
     }
     
     public void hurt(int damage, int type)
     {
        if (hurtable)
-        {
-            
+        { 
             animator.SetBool("Damaged", true);
+            //calculate the damage amount based on the type of projectile hitting them, 1 for frozen, 2 for default, 3 for burning
             if (fireImmune && iceImmune && type != 2)
             {
                 damage = 0;
@@ -142,6 +146,7 @@ public class Enemy : MonoBehaviour
             
             health -= damage;
 
+            //death
             if (health <= 0)
             {
                 StartCoroutine(Invincibility());
@@ -158,6 +163,7 @@ public class Enemy : MonoBehaviour
 
     System.Collections.IEnumerator shoot()
     {
+        //make it so the enemy is paused while on cooldown
         movable = false;
         attackOnCd = true;        
         animator.SetBool("Cooldown", true);
@@ -170,6 +176,7 @@ public class Enemy : MonoBehaviour
 
     System.Collections.IEnumerator Invincibility()
     {
+        //disable box collider so projectiles pass through the enemy while invincible
         boxCollider.enabled = false;
         hurtable = false;
         
@@ -178,7 +185,8 @@ public class Enemy : MonoBehaviour
         hurtable = true;
         boxCollider.enabled = true;
     }
-    //used so the shot comes out with animation
+
+    //animation functions so changes are made in time with animations
     public void shootTime()
     {
         Instantiate(projectile, transform.position, transform.rotation);

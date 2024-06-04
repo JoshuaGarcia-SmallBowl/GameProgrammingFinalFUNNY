@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,10 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    //UI
     public GameObject GOUI;
     public GameObject TitleUI;
     public GameObject pauseUI;
 
+    //external references
     private SpawnManager spawnManager;
     private PlayerController playerController;
     private GameObject player;
@@ -24,6 +27,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        //pausing
         if (gameActive)
         {
             if (Input.GetKeyDown(KeyCode.Escape))
@@ -47,14 +51,14 @@ public class GameManager : MonoBehaviour
 
     public void StartEndless()
     {
+        //start the game
         TitleUI.SetActive(false);
-        spawnManager.StartGame(false);
+        spawnManager.StartGame();
         playerController.movability(true);
         gameActive = true;
     }
 
-   
-    
+    //used by other scripts
     public void GameOver()
     {
         GOUI.SetActive(true);

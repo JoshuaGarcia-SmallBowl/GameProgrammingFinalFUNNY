@@ -4218,7 +4218,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1195372400}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4227,8 +4227,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -16.2}
-  m_SizeDelta: {x: 100, y: 240}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1195372402
 MonoBehaviour:
@@ -5318,7 +5318,6 @@ MonoBehaviour:
   scoreText: {fileID: 2110064728}
   newWaveUI: {fileID: 1142956828}
   player: {fileID: 1702849369}
-  winScreen: {fileID: 0}
   waveOneMusic: {fileID: 8300000, guid: 8672d1ee56c4410488fde1732da1159b, type: 3}
   waveTenMusic: {fileID: 8300000, guid: bb089ef8b7ee26b459d43d52977ce19d, type: 3}
   waveTwentyMusic: {fileID: 8300000, guid: d4dadd67abcfb06459e953c3165cb8c6, type: 3}

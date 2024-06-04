@@ -4,11 +4,13 @@ using UnityEngine;
 using TMPro;
 public class SpawnManager : MonoBehaviour
 {
+    //enemies
     public GameObject cactus;
     public GameObject mushroom;
     public GameObject boss;
     public int enemiesLeft = 1;
 
+    //spawning variables
     public float spawnRange = 9;
     private int wave = 0;
     private int enemiesToSpawn = 2;
@@ -16,22 +18,24 @@ public class SpawnManager : MonoBehaviour
 
     private bool gameActive = false;
 
+    //UI
     public TextMeshProUGUI waveText;
     public TextMeshProUGUI scoreText;
     public GameObject newWaveUI;
 
+    //wave info display
     private float waveInfoTime = 1.5f;
     private float waveInfoStart;
     private bool waveInfoUp;
 
-    private bool StoryMode = false;
     private int bossCooldown = 10;
+
+    //external references
     public GameObject player;
     private PlayerController playerController;
     private AudioSource audioSource;
 
-    public GameObject winScreen;
-
+    //music
     public AudioClip waveOneMusic;
     public AudioClip waveTenMusic;
     public AudioClip waveTwentyMusic;
@@ -45,23 +49,16 @@ public class SpawnManager : MonoBehaviour
 
     void Update()
     {
+        //new wave spawning
         if (gameActive)
         {
-            
             if (!waveInfoUp)
             {
+                //check how many enemies are alive
                 enemiesLeft = FindObjectsOfType<Enemy>().Length;
                 if (enemiesLeft == 0)
                 {
-                    //End Game if Story Mode, otherwise activate the new wave UI
-                    if (StoryMode && wave == 10)
-                    {
-                        gameActive = false;
-                        playerController.movability(false);
-                        winScreen.SetActive(true);
-                    }
-                    else
-                    {
+                    
                         wave++;
                         bossCooldown--;
                         newWaveUI.SetActive(true);
@@ -71,7 +68,7 @@ public class SpawnManager : MonoBehaviour
                         waveInfoStart = Time.time;
                         waveInfoUp = true;
                         ChangeMusic();
-                    }
+                    
                     
 
                 }
@@ -80,6 +77,7 @@ public class SpawnManager : MonoBehaviour
         }
         if (waveInfoUp)
         {
+            //remove the wave info after enough time
             float InfoTime = Time.time - waveInfoStart;
             if (InfoTime > waveInfoTime)
             {
@@ -122,23 +120,22 @@ public class SpawnManager : MonoBehaviour
 
     private Vector3 GenerateSpawnPosition()
     {
+        //generate a random spawn position for the enemies
         float spawnPosx = Random.Range(-spawnRange, spawnRange);
         float spawnPosz = Random.Range(-spawnRange - 80, spawnRange - 80);
         Vector3 returnPos = new Vector3(spawnPosx, 0, spawnPosz);
         return returnPos;
     }
 
-    public void StartGame(bool story)
+    //called by gamemanager
+    public void StartGame()
     {
-        if (story)
-        {
-            StoryMode = true;
-        }
         gameActive = true;
     }
 
     public void ChangeMusic()
     {
+        //change the music on certain waves
         if (wave == 30)
         {
             audioSource.clip = waveThirthyMusic;

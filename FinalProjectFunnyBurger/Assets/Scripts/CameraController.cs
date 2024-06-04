@@ -6,16 +6,14 @@ public class CameraController : MonoBehaviour
 {
     public GameObject player;
     public int offset = 19;
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-       
+       //keep the camera above the player
         transform.position = new(player.transform.position.x, offset, player.transform.position.z);
         
     }

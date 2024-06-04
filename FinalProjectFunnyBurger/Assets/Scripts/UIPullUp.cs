@@ -9,6 +9,7 @@ public class UIPullUp : MonoBehaviour
     private bool active = false;
     public void activation()
     {
+        //pull up or remove the UI this button correlates to
         if (!active)
         {
             targetUI.SetActive(true);

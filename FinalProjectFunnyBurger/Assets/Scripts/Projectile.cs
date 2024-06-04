@@ -5,26 +5,27 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    //characteristics
     public float speed = 2;
     public int damage = 5;
     public int health = 2;
     public float lifeTime = 1.2f;
     //1 for frozen, 2 for normal, 3 for burning
     public int type = 2;
-
-    private float bornTime;
-
     public bool split = false;
     public GameObject splitProj;
     public bool upFly = false;
     private Rigidbody rb;
 
-    public bool particle;
-    public GameObject particlePrefab;
+    //timer
+    private float bornTime;
 
     void Start()
     {
+        //start lifetime timer
         bornTime = Time.time;
+
+        //make the proectile fly upwards instead
         if (upFly)
         {
             Debug.Log("detected");
@@ -35,20 +36,13 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
+        //movement
         if (!upFly)
         {
             transform.Translate(Vector3.forward * Time.deltaTime * speed);
         }
-        
-        
-        if (transform.position.x < -30 || transform.position.x > 40)
-        {
-            Destroy(gameObject);
-        }
-        if (transform.position.z < -160 || transform.position.z > -30)
-        {
-            Destroy(gameObject);
-        }
+
+        //destroy when the timer ends
         float aliveTime = Time.time - bornTime;
         if (aliveTime > lifeTime)
         {
@@ -59,11 +53,10 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         
-        
+        //deal damage according to the projectile's type
         Enemy target = other.gameObject.GetComponent<Enemy>();
         if (target != null)
-        {
-            
+        {      
             target.hurt(damage, type);
             health--;
             if (health == 0)
@@ -75,20 +68,18 @@ public class Projectile : MonoBehaviour
     }
     private void DestroyH()
     {
+        //Destroy projectile
         if (split)
         {
             Split();
         }
-        if (particle)
-        {
-            Instantiate(particlePrefab, transform.position, Quaternion.identity);
-        }
-
         Destroy(gameObject);
     }
+
     private void Split()
     {
         Quaternion original = transform.rotation;
+        //Make a projectile every 15 degrees from -45 the original angle to +45
         for (float i = -45; i <= 45; i += 15)
         {
             transform.Rotate(0, i, 0);
